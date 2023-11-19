@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RestaurantTypeMapper extends AbstractDataMapper<RestaurantType> {
-    protected RestaurantTypeMapper(Connection connection) {
+    public RestaurantTypeMapper(Connection connection) {
         super(connection);
     }
 

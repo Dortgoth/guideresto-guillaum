@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CityMapper extends AbstractDataMapper<City> {
 
-    protected CityMapper(Connection connection) {
+    public CityMapper(Connection connection) {
         super(connection);
     }
 

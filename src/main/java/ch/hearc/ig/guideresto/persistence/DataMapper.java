@@ -8,6 +8,6 @@ public interface DataMapper<T> {
     public T findByName(String name);
     public List<T> findAll() throws SQLException;
     public boolean update(T entity) throws SQLException;
-    public void delete(long id);
-    public void insert(T entity) throws SQLException;
+    public boolean delete(long id);
+    public boolean insert(T entity) throws SQLException;
 }

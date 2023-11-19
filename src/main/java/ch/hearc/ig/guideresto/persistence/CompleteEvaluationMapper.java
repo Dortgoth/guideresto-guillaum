@@ -1,35 +1,34 @@
 package ch.hearc.ig.guideresto.persistence;
-import ch.hearc.ig.guideresto.business.BasicEvaluation;
+import ch.hearc.ig.guideresto.business.CompleteEvaluation;
+import ch.hearc.ig.guideresto.business.Grade;
 import ch.hearc.ig.guideresto.business.Restaurant;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class BasicEvaluationMapper extends AbstractDataMapper<BasicEvaluation>{
-    public BasicEvaluationMapper(Connection connection) {
+public class CompleteEvaluationMapper extends AbstractDataMapper<CompleteEvaluation>{
+    public CompleteEvaluationMapper(Connection connection) {
         super(connection);
     }
 
     @Override
-    protected BasicEvaluation mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+    protected CompleteEvaluation mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         Integer id = resultSet.getInt("NUMERO");
         LocalDate visitDate = resultSet.getDate("DATE_EVAL").toLocalDate();
-        boolean likeRestaurant = resultSet.getString("APPRECIATION").charAt(0) == 'T';
-        String ipAddress = resultSet.getString("ADDRESSE_IP");
+        String comment = resultSet.getString("COMMENTAIRE");
+        String username = resultSet.getString("NOM_UTILISATEUR");
         Restaurant restaurant = new RestaurantMapper(connection).findById(resultSet.getInt("FK_REST"));
-        return new BasicEvaluation(id, visitDate, restaurant, likeRestaurant, ipAddress);
-
+        return new CompleteEvaluation(id, visitDate, restaurant, comment, username);
     }
 
     @Override
     protected String getTableName() {
-        return "LIKES";
+        return null;
     }
 
     @Override
     protected String getColonneName() {
-        return "NUMERO";
+        return null;
     }
 }

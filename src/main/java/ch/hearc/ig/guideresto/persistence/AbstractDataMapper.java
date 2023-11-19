@@ -38,10 +38,29 @@ public abstract class AbstractDataMapper<T> implements DataMapper<T> {
     }
 
     @Override
-    public void insert(T entity) throws SQLException {
-        PreparedStatement statement=null;
-        statement = connection.prepareStatement(
-                "INSERT INTO " + getTableName() + " VALUES (?)");
+    public boolean insert(T entity) {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + getTableName() + " VALUES (?)");
+            statement.setString(1, entity.toString());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+        } finally {
+
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     @Override
     public boolean update(T entity) {
@@ -72,7 +91,7 @@ public abstract class AbstractDataMapper<T> implements DataMapper<T> {
 
 
     @Override
-    public void delete(long id) {
+    public boolean delete(long id) {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(
@@ -81,7 +100,9 @@ public abstract class AbstractDataMapper<T> implements DataMapper<T> {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     @Override
